@@ -1,0 +1,10 @@
+.idea/
+**/.idea/
+
+.dart_tool/
+**/.dart_tool/
+
+build/
+**/build/
+
+*.iml
