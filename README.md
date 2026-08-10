@@ -480,3 +480,14 @@ The core workflow is:
 **Detect → Understand → Retrieve → Predict → Advise**
 
 Rather than treating disease detection, agricultural knowledge, market analysis, and conversational assistance as isolated features, KrishiVani connects them into one integrated agricultural intelligence system.
+
+## Author
+### Kanishka Jha
+B.Tech, AKGEC Ghaziabad 
+
+Flutter + Backend Developer + ML Engineer
+
+Aim: Product AI Engineer
+
+## If you like this project
+Consider starring the repo and contributing ideas for sustainability-driven features.
