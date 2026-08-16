@@ -1,36 +1,32 @@
-import 'dart:typed_data';
 import 'package:Krishivani/core/constants/app_colors.dart';
 import 'package:Krishivani/core/constants/core_colors.dart';
 import 'package:Krishivani/core/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class AppImageCarousel extends StatefulWidget {
-  final List<Uint8List> images;
+  final List<String> images;
   final double height;
   final BorderRadius? borderRadius;
 
   const AppImageCarousel({
     super.key,
     required this.images,
-    this.height = 440,
+    this.height = 320,
     this.borderRadius,
   });
 
   @override
-  State<AppImageCarousel> createState() =>
-      _AppImageCarouselState();
+  State<AppImageCarousel> createState() => AppImageCarouselState();
 }
 
-class _AppImageCarouselState
-    extends State<AppImageCarousel> {
-  final PageController _pageController =
-  PageController();
+class AppImageCarouselState extends State<AppImageCarousel> {
+  final PageController pageController = PageController();
 
-  int _currentPage = 0;
+  int currentPage = 0;
 
   @override
   void dispose() {
-    _pageController.dispose();
+    pageController.dispose();
     super.dispose();
   }
 
@@ -45,21 +41,22 @@ class _AppImageCarouselState
         SizedBox(
           height: widget.height,
           child: PageView.builder(
-            controller: _pageController,
+            controller: pageController,
             itemCount: widget.images.length,
             onPageChanged: (index) {
               setState(() {
-                _currentPage = index;
+                currentPage = index;
               });
             },
-            itemBuilder: (_, index) {
+            itemBuilder: (context, index) {
               return Padding(
                 padding: context.padAllXS,
                 child: ClipRRect(
-                  borderRadius:
-                  widget.borderRadius ??
-                      BorderRadius.circular(context.scale(20)),
-                  child: Image.memory(
+                  borderRadius: widget.borderRadius ??
+                      BorderRadius.circular(
+                        context.scale(20),
+                      ),
+                  child: Image.asset(
                     widget.images[index],
                     fit: BoxFit.cover,
                     width: double.infinity,
@@ -74,30 +71,23 @@ class _AppImageCarouselState
           SizedBox(height: context.scaleH(8)),
 
           Row(
-            mainAxisAlignment:
-            MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
               widget.images.length,
                   (index) => AnimatedContainer(
                 duration: const Duration(
                   milliseconds: 200,
                 ),
-                margin:
-                const EdgeInsets.symmetric(
+                margin: const EdgeInsets.symmetric(
                   horizontal: 4,
                 ),
-                width:
-                _currentPage == index
-                    ? 20
-                    : 8,
+                width: currentPage == index ? 20 : 8,
                 height: context.scaleH(8),
                 decoration: BoxDecoration(
-                  borderRadius:
-                  BorderRadius.circular(
+                  borderRadius: BorderRadius.circular(
                     context.scaleH(100),
                   ),
-                  color:
-                  _currentPage == index
+                  color: currentPage == index
                       ? AppColors.blacktext
                       : CoreColors.grey300,
                 ),

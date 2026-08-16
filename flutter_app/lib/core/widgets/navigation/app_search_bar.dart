@@ -42,8 +42,8 @@ class AppSearchBar extends StatelessWidget {
         filled: true,
         fillColor: CoreColors.white,
         contentPadding: EdgeInsets.symmetric(
-          horizontal: context.spacingM,
-          vertical: context.spacingM,
+          horizontal: context.spacingS,
+          vertical: context.spacingS,
         ),
         border: OutlineInputBorder(
           borderRadius: context.borderRadiusM,

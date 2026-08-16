@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:Krishivani/feature/profile/data/models/profile_model.dart';
 import '../datasources/profile_remote_datasource.dart';
 
@@ -19,6 +20,16 @@ class ProfileRepository {
       userId: userId,
       column: column,
       value: value,
+    );
+  }
+
+  Future<ProfileModel> uploadProfilePicture({
+    required String userId,
+    required Uint8List imageBytes,
+  }) {
+    return _datasource.uploadProfilePicture(
+      userId: userId,
+      imageBytes: imageBytes,
     );
   }
 }

@@ -22,7 +22,7 @@ class AssetPaths {
   static const carrot= 'assets/images/carrot.png';
   static const corn= 'assets/images/corn.png';
   static const cucumber= 'assets/images/cucumber.png';
-  static const onion= 'assets/images/model.png';
+  static const onion= 'assets/images/onion.png';
   static const plant ='assets/images/plant.png';
   static const tomatoes= 'assets/images/tomatoes.png';
 
@@ -31,7 +31,7 @@ class AssetPaths {
   static const syrphidae= 'assets/images/syrphidae.png';
   static const rust_fungus= 'assets/images/rust_fungus.png';
 
-  static const model= 'assets/images/onion.png';
+  static const model= 'assets/images/model.png';
 
   //icons
   static const IconData back = Icons.arrow_back_ios;
@@ -101,4 +101,7 @@ class AssetPaths {
   static const IconData language= Icons.language;
   static const IconData save_diagnosis= Icons.save_outlined;
   static const IconData history= Icons.history_rounded;
+  static const IconData gallery= Icons.photo_library_outlined;
+  static const IconData not_supported= Icons.image_not_supported_outlined;
+  static const IconData image_outlined= Icons.image_outlined;
 }

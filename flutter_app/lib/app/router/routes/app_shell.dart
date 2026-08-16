@@ -68,14 +68,13 @@ class _AppShellState extends State<AppShell> {
             child: widget.child,
           ),
 
-          SizedBox(
-            height: context.scale(132),
-            width: double.infinity,
+          SafeArea(
+            top: false,
             child: AppBottomNavbar(
               controller: _controller,
               currentIndex: index,
-              onTap: (index){
-                switch(index){
+              onTap: (index) {
+                switch (index) {
                   case 0:
                     context.go(RoutePaths.home);
                     break;
@@ -90,7 +89,6 @@ class _AppShellState extends State<AppShell> {
                     break;
                 }
               },
-
             ),
           ),
 

@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:Krishivani/feature/profile/data/repositories/profile_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -7,6 +10,43 @@ class ProfileNotifier extends StateNotifier<ProfileState> {
   final ProfileRepository _repository;
 
   ProfileNotifier(this._repository) : super(const ProfileState());
+
+  Future<bool> uploadProfilePicture(Uint8List imageBytes) async {
+    final user = Supabase.instance.client.auth.currentUser;
+
+    if (user == null) {
+      state = state.copyWith(
+        error: 'User is not authenticated.',
+      );
+      return false;
+    }
+
+    state = state.copyWith(
+      isUpdating: true,
+      error: null,
+    );
+
+    try {
+      final profile = await _repository.uploadProfilePicture(
+        userId: user.id,
+        imageBytes: imageBytes,
+      );
+
+      state = state.copyWith(
+        profile: profile,
+        isUpdating: false,
+      );
+
+      return true;
+    } catch (e) {
+      state = state.copyWith(
+        isUpdating: false,
+        error: e.toString(),
+      );
+
+      return false;
+    }
+  }
 
   Future<void> loadProfile() async {
     final user = Supabase.instance.client.auth.currentUser;

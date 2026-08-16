@@ -1,4 +1,5 @@
 import 'package:Krishivani/app/router/route_paths.dart';
+import 'package:Krishivani/feature/diagnosis/presentation/screens/diagnosis_history_screen.dart';
 import 'package:Krishivani/feature/profile/presentation/screens/model_settings_screen.dart';
 import 'package:Krishivani/feature/profile/presentation/screens/my_profile_screen.dart';
 import 'package:Krishivani/feature/profile/presentation/screens/profile_screen.dart';
@@ -24,16 +25,14 @@ class OtherRoutes {
       builder: (_, __) => const ModelSettingsScreen(),
     ),
 
-    // GoRoute(
-    //   path: RoutePaths.diagnosis,
-    //   name: 'diagnosis',
-    //   builder: (_, __) => const DiagnosisScreen(),
-    // ),
-    //
-    // GoRoute(
-    //   path: RoutePaths.history,
-    //   name: 'history',
-    //   builder: (_, __) => const HistoryScreen(),
-    // ),
+    GoRoute(
+      path: RoutePaths.history,
+      name: 'history',
+      builder: (context, state) {
+        return const DiagnosisHistoryScreen();
+      },
+    ),
+
+
   ];
 }

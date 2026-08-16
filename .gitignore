@@ -8,3 +8,10 @@ build/
 **/build/
 
 *.iml
+# Environment variables
+.env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
