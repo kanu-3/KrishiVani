@@ -4,7 +4,7 @@
 
 KrishiVani is an AI-powered agricultural assistance platform designed to help farmers identify plant diseases, understand crop health, access agricultural knowledge, analyze market conditions, and interact with an intelligent agricultural assistant.
 
-The system combines a **Flutter mobile application**, **Supabase backend**, **CNN-based plant disease detection**, **RAG-based agricultural knowledge retrieval**, and **machine learning models for market analysis** into a unified platform.
+The system combines a **Flutter mobile application**, **Supabase backend**, **CNN-based plant disease detection**, **RAG-based agricultural knowledge retrieval**, and **machine learning-based market price forecasting** into a unified platform.
 
 ---
 
@@ -14,16 +14,17 @@ The system combines a **Flutter mobile application**, **Supabase backend**, **CN
 
 KrishiVani allows farmers to capture or upload an image of a plant and identify potential diseases using a deep learning model.
 
-The current disease detection pipeline uses **EfficientNetB0**, a convolutional neural network architecture trained for multi-class plant disease classification.
+The disease detection pipeline uses **EfficientNetB0**, a convolutional neural network architecture trained for multi-class plant disease classification.
 
 The system provides:
 
-* Plant image upload/capture
-* Image preprocessing
-* CNN-based disease classification
-* Disease prediction
-* Prediction confidence
-* Disease-specific symptoms and recommendations
+- Plant image capture/upload
+- Image preprocessing
+- CNN-based disease classification
+- Disease prediction
+- Prediction confidence
+- Disease-specific symptoms and recommendations
+- Diagnosis history
 
 ---
 
@@ -31,18 +32,18 @@ The system provides:
 
 The KrishiVani chatbot is **not a generic conversational chatbot**.
 
-It is designed specifically around agricultural assistance and combines multiple sources of context before generating an answer.
+It is designed specifically for agricultural assistance and combines multiple sources of context before generating an answer.
 
 The chatbot can use:
 
-* The farmer's text query
-* Plant images
-* Disease predicted by the CNN model
-* Agricultural documents
-* Retrieved information from the agricultural knowledge base
-* Conversation context/memory
+- Farmer's text query
+- Plant/disease context
+- Disease predicted by the CNN model
+- Agricultural documents
+- Retrieved information from the agricultural knowledge base
+- Conversation history
 
-This creates a multimodal agricultural assistant capable of answering questions based on the **actual plant and disease being analyzed**, rather than providing generic responses.
+This creates a context-aware agricultural assistant capable of answering questions based on the plant and disease being analyzed.
 
 #### Example Flow
 
@@ -50,10 +51,10 @@ This creates a multimodal agricultural assistant capable of answering questions 
 Farmer uploads plant image
           │
           ▼
-     CNN Prediction
+    CNN Prediction
           │
           ▼
-   Disease Identified
+    Disease Identified
           │
           ├──────────────┐
           │              │
@@ -66,13 +67,13 @@ Farmer uploads plant image
           RAG Retrieval
                  │
                  ▼
-        Context Construction
+       Context Construction
                  │
                  ▼
           AI Chatbot
                  │
                  ▼
-     Agricultural Guidance
+      Agricultural Guidance
 ```
 
 ---
@@ -97,37 +98,31 @@ The RAG layer is intended to reduce generic or unsupported responses and provide
 
 ### 4. Market Analysis
 
-KrishiVani will include a machine learning-based market analysis system for agricultural crops.
-
-Rather than relying on a single algorithm, multiple machine learning models will be trained and evaluated to determine the best-performing approach for the available market dataset.
-
-The model experimentation will include **XGBoost** along with other suitable machine learning algorithms.
+KrishiVani includes a machine-learning-based market price forecasting system.
+The V1 system uses historical crop price data to forecast the next 7 days of prices.
 
 The pipeline will involve:
 
 ```text
-Market Dataset
-      │
-      ▼
+Historical Market Data
+        │
+        ▼
 Data Cleaning & Preprocessing
-      │
-      ▼
-Feature Engineering
-      │
-      ▼
-Multiple ML Models
-      │
-      ├── XGBoost
-      ├── Random forest 
-      │
-      ▼
-Model Evaluation & Comparison
-      │
-      ▼
-Best Performing Model
-      │
-      ▼
-Market Prediction
+        │
+        ▼
+Time-Series Preparation
+        │
+        ▼
+30-Day Historical Window
+        │
+        ▼
+Multi-Output LSTM
+        │
+        ▼
+7-Day Price Forecast
+        │
+        ▼
+Market Analysis
 ```
 
 Models will be compared using appropriate evaluation metrics, and the best-performing model will be selected for deployment.
@@ -186,6 +181,7 @@ The authentication flow includes:
 | Data Processing    | Pandas, NumPy         |
 | Vector Search      | PostgreSQL / pgvector |
 | AI Architecture    | RAG                   |
+| Market Analysis    | LSTM                  |
 | Model Hosting      | Render                |
 | Version Control    | Git / GitHub          |
 
@@ -204,23 +200,35 @@ The authentication flow includes:
                          │       Flutter       │
                          └──────────┬──────────┘
                                     │
-             ┌──────────────────────┼──────────────────────┐
-             │                      │                      │
-             ▼                      ▼                      ▼
-       Supabase Backend       ML Inference API       AI Assistant
-       Authentication              FastAPI                │
-       User Profiles                 │                    │
-       Application Data             ▼                    ▼
-                             EfficientNetB0          RAG Pipeline
-                                    │                    │
-                                    ▼                    ▼
-                             Disease Prediction    Vector Database
-                                                         │
-                                                         ▼
-                                                Agricultural Documents
-                                                         │
-                                                         ▼
-                                                   LLM Response
+              ┌─────────────────────┼─────────────────────┐
+              │                     │                     │
+              ▼                     ▼                     ▼
+       Supabase Backend      ML Inference API       AI Assistant
+       Authentication             FastAPI                 │
+       User Profiles                │                     │
+       Application Data             │                     │
+                                    ▼                     ▼
+                             EfficientNetB0         RAG Pipeline
+                                    │                     │
+                                    ▼                     ▼
+                            Disease Prediction      Vector Database
+                                                          │
+                                                          ▼
+                                                 Agricultural Documents
+                                                          │
+                                                          ▼
+                                                    LLM Response
+
+                         Market Analysis
+                                │
+                                ▼
+                         FastAPI / ML API
+                                │
+                                ▼
+                         LSTM Forecasting
+                                │
+                                ▼
+                          7-Day Prediction
 ```
 
 ---
@@ -271,6 +279,28 @@ RAG + Agricultural Knowledge
      │
      ▼
 Personalized Guidance
+```
+---
+
+## Market Forecasting Model
+
+```text
+Historical Price Data
+        │
+        ▼
+Data Cleaning
+        │
+        ▼
+Daily Time-Series Construction
+        │
+        ▼
+30-Day Input Window
+        │
+        ▼
+LSTM
+        │
+        ▼
+7-Day Multi-Output Forecast
 ```
 
 ---
@@ -414,44 +444,57 @@ KrishiVani/
 
 ## Development Status
 
-### Completed
+### Application
+- Flutter application architecture
+- Feature-oriented project structure
+- Onboarding flow
+- Authentication
+- Supabase Auth integration
+- Email verification
+- OTP flow
+- Password reset
+- User profile system
+- Home screen
+- Application shell
+- Bottom navigation
+- Plant scanning interface
+- Diagnosis history
+- Chat interface
+- Market interface
+- Reusable UI components
 
-* Flutter application architecture
-* Onboarding flow
-* Authentication
-* Supabase integration
-* Email verification
-* OTP flow
-* Password reset
-* Home screen
-* Application shell
-* Bottom navigation
-* Plant scanning interface
-* Market interface
-* Chat interface
-* Profile system
-* Reusable UI components
-* Supabase profile integration
-* Plant disease dataset preprocessing
-* CNN training pipeline
-* EfficientNetB0 disease classification model
+### Plant Disease Detection
+- Plant disease dataset preprocessing
+- EfficientNetB0 training
+- Multi-class disease classification
+- Model evaluation
+- CNN inference API
+- Flutter ↔ ML API integration
+- Disease prediction
+- Confidence score
+- Diagnosis storage
 
-### Currently Being Implemented
+### Agricultural Assistant
+- Agricultural document processing
+- Document chunking
+- Embedding generation
+- PostgreSQL / pgvector integration
+- RAG retrieval pipeline
+- Context-aware agricultural chatbot
+- Disease-aware chatbot context
+- Conversation storage
 
-* CNN model deployment
-* FastAPI inference service
-* Flutter ↔ ML API integration
-* End-to-end disease prediction flow
-* RAG pipeline
-* Agricultural document processing
-* Embedding generation
-* Vector database / pgvector integration
-* Context-aware agricultural chatbot
-* Multimodal chatbot context
-* Market analysis pipeline
-* XGBoost model
-* Multi-model experimentation and comparison
-* Selection of the best-performing market prediction model
+### Market Analysis
+- Historical market data processing
+- Time-series preprocessing
+- Market price forecasting experiment
+- XGBoost experimentation
+- LSTM forecasting
+- 30-day historical input window
+- 7-day multi-output prediction
+- Forecast visualization
+- FastAPI market forecasting endpoint
+- Flutter market forecast integration
 
 ---
 
@@ -459,15 +502,19 @@ KrishiVani/
 
 After the core system is implemented, KrishiVani can be extended with:
 
-* Larger agricultural knowledge bases
-* Additional plant and disease classes
-* Improved multimodal reasoning
-* Voice-based agricultural assistance
-* Personalized recommendations
-* Conversation memory
-* More sophisticated market forecasting
-* Model monitoring and evaluation
-* Additional agricultural datasets
+- Continuously updated market datasets
+- Automated market-data ingestion
+- Dynamic date-aware forecasting
+- Automated model retraining
+- Model monitoring and evaluation
+- More sophisticated time-series forecasting
+- Additional crops and agricultural datasets
+- Voice-based agricultural assistance
+- Improved multimodal reasoning
+- Personalized recommendations
+- Larger agricultural knowledge bases
+- Additional plant and disease classes
+- Improved conversational memory
 
 ---
 
