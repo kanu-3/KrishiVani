@@ -31,6 +31,9 @@ class AppOutlineButton extends StatelessWidget {
       child: OutlinedButton(
         onPressed: isLoading ? null : onPressed,
         style: OutlinedButton.styleFrom(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.spacingM,
+          ),
           shape: RoundedRectangleBorder(
             borderRadius: borderRadius ?? context.borderRadiusM,
           ),
@@ -49,12 +52,19 @@ class AppOutlineButton extends StatelessWidget {
           children: [
             if (icon != null) ...[
               icon!,
-              SizedBox(width: context.spacingXXS),
+              SizedBox(width: context.spacingXS),
             ],
-            Text(text),
+            Flexible(
+              child: Text(
+                text,
+                style: const TextStyle(
+                  height: 1.1,
+                ),
+              ),
+            ),
           ],
         ),
-      ),
+      )
     );
   }
 }

@@ -38,7 +38,7 @@ class DiagnosisHistoryCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: context.scaleH(130),
+                height: context.scaleH(160),
                 width: double.infinity,
                 child: CachedNetworkImage(
                   imageUrl: diagnosis.imageUrl,

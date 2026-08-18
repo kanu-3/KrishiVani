@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../../extensions/context_extensions.dart';
 
+import 'package:flutter/material.dart';
+import '../../extensions/context_extensions.dart';
+
 class AppElevatedButton extends StatelessWidget {
   const AppElevatedButton({
     super.key,
@@ -29,6 +32,11 @@ class AppElevatedButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
+          minimumSize: Size.zero,
+          padding: EdgeInsets.symmetric(
+            horizontal: context.spacingM,
+          ),
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           shape: RoundedRectangleBorder(
             borderRadius: borderRadius ?? context.borderRadiusS,
           ),
@@ -37,7 +45,9 @@ class AppElevatedButton extends StatelessWidget {
             ? SizedBox(
           height: context.spacingM,
           width: context.spacingM,
-          child: const CircularProgressIndicator(strokeWidth: 2),
+          child: const CircularProgressIndicator(
+            strokeWidth: 2,
+          ),
         )
             : Row(
           mainAxisSize: MainAxisSize.min,
@@ -47,7 +57,15 @@ class AppElevatedButton extends StatelessWidget {
               icon!,
               SizedBox(width: context.spacingXXS),
             ],
-            Text(text),
+            Flexible(
+              child: Text(
+                text,
+                style: const TextStyle(
+                  height: 1.1,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
           ],
         ),
       ),

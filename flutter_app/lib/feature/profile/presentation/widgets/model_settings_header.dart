@@ -54,7 +54,7 @@ class ModelSettingsHeader extends StatelessWidget {
         SizedBox(height: context.spacingS),
 
         SizedBox(
-          width: context.scaleW(180),
+          // width: context.scaleW(180),
           child: AppElevatedButton(
             height: context.scaleH(56),
             text: 'Change model',

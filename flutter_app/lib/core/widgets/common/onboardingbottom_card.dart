@@ -32,7 +32,7 @@ class OnboardingBottomCard extends StatelessWidget {
 
     return Container(
       width: context.screenWidth,
-      height: context.scale(300),
+      height: context.scale(360),
       padding: theme.padding,
       decoration: BoxDecoration(
         color: theme.bg_color,
